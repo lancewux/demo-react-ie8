@@ -120,7 +120,7 @@ const CommentForm = React.createClass({
 			return;
 		}
 		this.props.onCommentSubmit({author: author, text: text});
-		this.setState({author: '', text: ''});
+		// this.setState({author: '', text: ''});
 	},
 	render: function() {
 		return (
@@ -158,14 +158,17 @@ const CommentBox = React.createClass({
 			xmlHttp.onreadystatechange = () => {
 				if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 					const data = JSON.parse(xmlHttp.responseText);
-					console.log(xmlHttp.responseText);
+					console.log(data);
 
 					this.setState({data: data});
 				}
 			};
 			xmlHttp.open('post', this.props.url, true);
-			xmlHttp.setRequestHeader('Content-Type', "application/x-www-form-urlencoded");
+			xmlHttp.setRequestHeader("Content-Type", "application/json");//application/x-www-form-urlencoded
+			// console.log(comment);
 			const body = JSON.stringify(comment);
+			// const body= 'name=jack';
+			console.log(body);
 			xmlHttp.send(body);
 		}
 	},
@@ -187,7 +190,7 @@ const CommentBox = React.createClass({
 
 ReactDOM.render(
   // <Timer name="Jone"/>,
-  <CommentBox url="http://192.168.204.49:3001/api/comments" pollInterval={2000}/>,
+  <CommentBox url="http://127.0.0.1:3001/api/comments" pollInterval={2000}/>,
   // <MarkdownEditor/>,
   document.getElementById('root')
 );
